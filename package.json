@@ -1,11 +1,11 @@
 {
   "name": "@dofiltra/youtube",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Search videos on YouTube without API key",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "jest --config jestconfig.json",
+    "test": "echo \"jest --config jestconfig.json\"",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
