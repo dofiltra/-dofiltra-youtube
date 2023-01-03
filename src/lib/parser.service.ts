@@ -1,15 +1,14 @@
 export class ParserService {
-
   parseVideo(data: any) {
     if (!data) return undefined;
 
     try {
       let title = '';
-const renderer= data.compactVideoRenderer || data.videoRenderer
+      const renderer = data.compactVideoRenderer || data.videoRenderer;
 
-      if (renderer){
+      if (renderer) {
         title = renderer.title.runs[0].text;
-        title = title.replace("\\\\", "\\");
+        title = title.replace('\\\\', '\\');
 
         try {
           title = decodeURIComponent(title);
@@ -19,11 +18,14 @@ const renderer= data.compactVideoRenderer || data.videoRenderer
 
         return {
           id: {
-            videoId: renderer.videoId
+            videoId: renderer.videoId,
           },
           url: `https://www.youtube.com/watch?v=${renderer.videoId}`,
           title,
-          description: renderer.descriptionSnippet && renderer.descriptionSnippet.runs[0] ? renderer.descriptionSnippet.runs[0].text : "",
+          description:
+            renderer.descriptionSnippet && renderer.descriptionSnippet.runs[0]
+              ? renderer.descriptionSnippet.runs[0].text
+              : '',
           duration_raw: renderer.lengthText ? renderer.lengthText.simpleText : null,
           snippet: {
             url: `https://www.youtube.com/watch?v=${renderer.videoId}`,
@@ -35,22 +37,27 @@ const renderer= data.compactVideoRenderer || data.videoRenderer
               default: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1],
               high: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1],
               height: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].height,
-              width: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].width
+              width: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].width,
             },
             title,
-            views: renderer.viewCountText && renderer.viewCountText.simpleText ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, "") : 0
+            views:
+              renderer.viewCountText && renderer.viewCountText.simpleText
+                ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, '')
+                : 0,
           },
-          views: renderer.viewCountText && renderer.viewCountText.simpleText ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, "") : 0
+          views:
+            renderer.viewCountText && renderer.viewCountText.simpleText
+              ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, '')
+              : 0,
         };
-
-      } else if (data.videoWithContextRenderer){
-        if (data.videoWithContextRenderer.headline?.runs && data.videoWithContextRenderer.headline?.runs.length > 0){
+      } else if (data.videoWithContextRenderer) {
+        if (data.videoWithContextRenderer.headline?.runs && data.videoWithContextRenderer.headline?.runs.length > 0) {
           title = data.videoWithContextRenderer.headline?.runs[0].text;
-        }else{
+        } else {
           title = data.videoWithContextRenderer.headline?.accessibility?.accessibilityData?.label;
         }
 
-        title = title.replace("\\\\", "\\");
+        title = title.replace('\\\\', '\\');
 
         try {
           title = decodeURIComponent(title);
@@ -60,7 +67,7 @@ const renderer= data.compactVideoRenderer || data.videoRenderer
 
         return {
           id: {
-            videoId: data.videoWithContextRenderer.videoId
+            videoId: data.videoWithContextRenderer.videoId,
           },
           url: `https://www.youtube.com/watch?v=${data.videoWithContextRenderer.videoId}`,
           title,
@@ -69,25 +76,47 @@ const renderer= data.compactVideoRenderer || data.videoRenderer
           snippet: {
             url: `https://www.youtube.com/watch?v=${data.videoWithContextRenderer.videoId}`,
             duration: data.videoWithContextRenderer.lengthText?.accessibility?.accessibilityData?.text,
-            publishedAt: data.videoWithContextRenderer.publishedTimeText?.runs?.length > 0 ? data.videoWithContextRenderer.publishedTimeText?.runs[0].text : null,
+            publishedAt:
+              data.videoWithContextRenderer.publishedTimeText?.runs?.length > 0
+                ? data.videoWithContextRenderer.publishedTimeText?.runs[0].text
+                : null,
             thumbnails: {
               id: data.videoWithContextRenderer.videoId,
-              url: data.videoWithContextRenderer.thumbnail.thumbnails[data.videoWithContextRenderer.thumbnail.thumbnails.length - 1].url,
-              default: data.videoWithContextRenderer.thumbnail.thumbnails[data.videoWithContextRenderer.thumbnail.thumbnails.length - 1],
-              high: data.videoWithContextRenderer.thumbnail.thumbnails[data.videoWithContextRenderer.thumbnail.thumbnails.length - 1],
-              height: data.videoWithContextRenderer.thumbnail.thumbnails[data.videoWithContextRenderer.thumbnail.thumbnails.length - 1].height,
-              width: data.videoWithContextRenderer.thumbnail.thumbnails[data.videoWithContextRenderer.thumbnail.thumbnails.length - 1].width
+              url: data.videoWithContextRenderer.thumbnail.thumbnails[
+                data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
+              ].url,
+              default:
+                data.videoWithContextRenderer.thumbnail.thumbnails[
+                  data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
+                ],
+              high: data.videoWithContextRenderer.thumbnail.thumbnails[
+                data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
+              ],
+              height:
+                data.videoWithContextRenderer.thumbnail.thumbnails[
+                  data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
+                ].height,
+              width:
+                data.videoWithContextRenderer.thumbnail.thumbnails[
+                  data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
+                ].width,
             },
             title,
-            views: data.videoWithContextRenderer.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(/[^0-9]/g, "")
+            views: data.videoWithContextRenderer.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(
+              /[^0-9]/g,
+              '',
+            ),
           },
-          views: data.videoWithContextRenderer.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(/[^0-9]/g, "")
+          views: data.videoWithContextRenderer.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(
+            /[^0-9]/g,
+            '',
+          ),
         };
       }
 
-      return undefined
+      return undefined;
     } catch (e) {
-      return undefined
+      return undefined;
     }
   }
 }
