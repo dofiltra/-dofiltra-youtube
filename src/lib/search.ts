@@ -15,7 +15,7 @@ export async function searchVideo(searchQuery: string) {
   let html = await searchRes.body;
   // try to parse html
   try {
-    const data = html.split("ytInitialData = '")[1].split("';</script>")[0];
+    const data = html.split("ytInitialData = ")[1].split("</script>")[0];
     // @ts-ignore
     html = data.replace(/\\x([0-9A-F]{2})/ig, (...items) => {
       return String.fromCharCode(parseInt(items[1], 16));
@@ -23,6 +23,11 @@ export async function searchVideo(searchQuery: string) {
     html = html.replaceAll("\\\\\"", "");
     html = JSON.parse(html)
   } catch(e) { /* nothing */}
+
+  if (html?.contents?.twoColumnSearchResultsRenderer?.primaryContents?.sectionListRenderer?.contents?.[0].itemSectionRenderer?.contents?.length) {
+    details = html.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
+    fetched = true;
+}
 
   if(html && html.contents && html.contents.sectionListRenderer && html.contents.sectionListRenderer.contents
     && html.contents.sectionListRenderer.contents.length > 0 && html.contents.sectionListRenderer.contents[0].itemSectionRenderer &&

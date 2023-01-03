@@ -5,8 +5,10 @@ export class ParserService {
 
     try {
       let title = '';
-      if (data.compactVideoRenderer){
-        title = data.compactVideoRenderer.title.runs[0].text;
+const renderer= data.compactVideoRenderer || data.videoRenderer
+
+      if (renderer){
+        title = renderer.title.runs[0].text;
         title = title.replace("\\\\", "\\");
 
         try {
@@ -17,28 +19,28 @@ export class ParserService {
 
         return {
           id: {
-            videoId: data.compactVideoRenderer.videoId
+            videoId: renderer.videoId
           },
-          url: `https://www.youtube.com/watch?v=${data.compactVideoRenderer.videoId}`,
+          url: `https://www.youtube.com/watch?v=${renderer.videoId}`,
           title,
-          description: data.compactVideoRenderer.descriptionSnippet && data.compactVideoRenderer.descriptionSnippet.runs[0] ? data.compactVideoRenderer.descriptionSnippet.runs[0].text : "",
-          duration_raw: data.compactVideoRenderer.lengthText ? data.compactVideoRenderer.lengthText.simpleText : null,
+          description: renderer.descriptionSnippet && renderer.descriptionSnippet.runs[0] ? renderer.descriptionSnippet.runs[0].text : "",
+          duration_raw: renderer.lengthText ? renderer.lengthText.simpleText : null,
           snippet: {
-            url: `https://www.youtube.com/watch?v=${data.compactVideoRenderer.videoId}`,
-            duration: data.compactVideoRenderer.lengthText ? data.compactVideoRenderer.lengthText.simpleText : null,
-            publishedAt: data.compactVideoRenderer.publishedTimeText ? data.compactVideoRenderer.publishedTimeText.simpleText : null,
+            url: `https://www.youtube.com/watch?v=${renderer.videoId}`,
+            duration: renderer.lengthText ? renderer.lengthText.simpleText : null,
+            publishedAt: renderer.publishedTimeText ? renderer.publishedTimeText.simpleText : null,
             thumbnails: {
-              id: data.compactVideoRenderer.videoId,
-              url: data.compactVideoRenderer.thumbnail.thumbnails[data.compactVideoRenderer.thumbnail.thumbnails.length - 1].url,
-              default: data.compactVideoRenderer.thumbnail.thumbnails[data.compactVideoRenderer.thumbnail.thumbnails.length - 1],
-              high: data.compactVideoRenderer.thumbnail.thumbnails[data.compactVideoRenderer.thumbnail.thumbnails.length - 1],
-              height: data.compactVideoRenderer.thumbnail.thumbnails[data.compactVideoRenderer.thumbnail.thumbnails.length - 1].height,
-              width: data.compactVideoRenderer.thumbnail.thumbnails[data.compactVideoRenderer.thumbnail.thumbnails.length - 1].width
+              id: renderer.videoId,
+              url: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].url,
+              default: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1],
+              high: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1],
+              height: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].height,
+              width: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].width
             },
             title,
-            views: data.compactVideoRenderer.viewCountText && data.compactVideoRenderer.viewCountText.simpleText ? data.compactVideoRenderer.viewCountText.simpleText.replace(/[^0-9]/g, "") : 0
+            views: renderer.viewCountText && renderer.viewCountText.simpleText ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, "") : 0
           },
-          views: data.compactVideoRenderer.viewCountText && data.compactVideoRenderer.viewCountText.simpleText ? data.compactVideoRenderer.viewCountText.simpleText.replace(/[^0-9]/g, "") : 0
+          views: renderer.viewCountText && renderer.viewCountText.simpleText ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, "") : 0
         };
 
       } else if (data.videoWithContextRenderer){
