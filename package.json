@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/appit-online/youtube-search.git"
+    "url": "git+https://github.com/dofiltra/youtube.git"
   },
   "keywords": [
     "youtube",
@@ -27,19 +27,15 @@
     "youtube api",
     "youtube crawler"
   ],
-  "funding": {
-    "url": "https://paypal.me/dave7117",
-    "type": "paypal"
-  },
   "author": "David Koller",
   "license": "ISC",
   "files": [
     "lib/**/*"
   ],
   "bugs": {
-    "url": "https://github.com/appit-online/youtube-search/issues"
+    "url": "https://github.com/dofiltra/youtube/issues"
   },
-  "homepage": "https://github.com/appit-online/youtube-search#readme",
+  "homepage": "https://github.com/dofiltra/youtube#readme",
   "devDependencies": {
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.12",
@@ -52,5 +48,9 @@
   },
   "dependencies": {
     "got": "^11.8.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
