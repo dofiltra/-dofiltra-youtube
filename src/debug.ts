@@ -10,7 +10,6 @@ class AibackDebug {
   static async start({}: any): TResultError<any> {
     const res = await searchVideo({ searchQuery: 'top 10 music' });
 
-    debugger;
     return { result: {} };
   }
 }
