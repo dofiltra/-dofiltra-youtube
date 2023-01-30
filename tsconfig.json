@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "outDir": "./build",
+    "experimentalDecorators": true,
+    "outDir": "./lib",
     "target": "ES2021",
     "module": "ES2020",
     "moduleResolution": "Node",
@@ -16,10 +17,8 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "noImplicitAny": true,
-    "declaration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "declaration": true
   },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src"],
+  "exclude": ["node_modules", "**/__tests__/*"]
 }
