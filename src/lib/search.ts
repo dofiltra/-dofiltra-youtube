@@ -1,28 +1,45 @@
 import { ParserService } from './parser.service';
-import got from 'got';
+import { getFetchHap } from 'dofiltra_api';
+import { ProxyItem } from 'dprx-types';
 
 const rfc3986EncodeURIComponent = (str: string) => encodeURIComponent(str).replace(/[!'()*]/g, escape);
 
-export async function searchVideo(searchQuery: string) {
+export async function searchVideo({ searchQuery, proxy }: { searchQuery: string; proxy?: ProxyItem }) {
   const YOUTUBE_URL = 'https://www.youtube.com';
 
   const results = [];
   let details = [];
   let fetched = false;
-  const options = { type: 'video', limit: 0 };
 
-  const searchRes: any = await got.get(
-    `${YOUTUBE_URL}/results?q=${rfc3986EncodeURIComponent(searchQuery.trim())}&hl=en`,
-  );
-  let html = await searchRes.body;
+  const options = { type: 'video', limit: 0 };
+  const url = `${YOUTUBE_URL}/results?q=${rfc3986EncodeURIComponent(searchQuery.trim())}&hl=en`;
+
+  const fh = await getFetchHap({ timeout: 30e3 });
+  const searchRes = await fh(url, {
+    proxy: proxy?.url(),
+  });
+
+  let html = await searchRes.text();
+
   // try to parse html
   try {
     const data = html.split('ytInitialData = ')[1].split('</script>')[0];
+
     // @ts-ignore
-    html = data.replace(/\\x([0-9A-F]{2})/gi, (...items) => {
-      return String.fromCharCode(parseInt(items[1], 16));
-    });
-    html = html.replaceAll('\\\\"', '');
+    html = data
+      .replace(/\\x([0-9A-F]{2})/gi, (...items: any[]) => {
+        return String.fromCharCode(parseInt(items[1], 16));
+      })
+      .replaceAll('\\\\"', '');
+
+    while (html.length && !html.startsWith('{')) {
+      html = html.slice(1);
+    }
+
+    while (html.length && !html.endsWith('}')) {
+      html = html.slice(0, -1);
+    }
+
     html = JSON.parse(html);
   } catch (e) {
     /* nothing */

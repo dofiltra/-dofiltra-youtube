@@ -4,7 +4,9 @@
   "description": "Search videos on YouTube without API key",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "type": "module",
   "scripts": {
+    "dev": "yarn run build && node --expose-gc --trace-warnings --experimental-modules --es-module-specifier-resolution=node ./build/debug.js",
     "test": "echo \"jest --config jestconfig.json\"",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -47,6 +49,8 @@
     "typescript": "^4.5.3"
   },
   "dependencies": {
+    "dofiltra_api": "^1.1.98",
+    "dprx-types": "^1.2.164",
     "got": "^11.8.3"
   },
   "publishConfig": {
