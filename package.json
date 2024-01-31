@@ -1,6 +1,6 @@
 {
   "name": "@dofiltra/youtube",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "Search videos on YouTube without API key",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -16,7 +16,8 @@
     "prepare": "yarn run build",
     "preversion": "yarn run lint",
     "version": "yarn run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "upg:do": "yarn add dprx-types doback"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,6 @@
     "youtube api",
     "youtube crawler"
   ],
-  "author": "David Koller",
   "license": "ISC",
   "files": [
     "lib/**/*"
@@ -49,8 +49,8 @@
     "typescript": "^4.5.3"
   },
   "dependencies": {
-    "dofiltra_api": "^1.1.98",
-    "dprx-types": "^1.2.164",
+    "doback": "^1.0.241",
+    "dprx-types": "^1.2.863",
     "got": "^11.8.3"
   },
   "publishConfig": {
