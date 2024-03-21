@@ -1,6 +1,6 @@
+import { ProxyHelper, ProxyItem } from '@dofiltra/helpers';
 import { ParserService } from './parser.service';
 import { getFetchHap } from 'doback';
-import { ProxyHelper, ProxyItem } from 'dprx-types';
 
 const rfc3986EncodeURIComponent = (str: string) => encodeURIComponent(str).replace(/[!'()*]/g, escape);
 
@@ -16,7 +16,7 @@ export async function searchVideo({ searchQuery, proxy }: { searchQuery: string;
 
   const fh = await getFetchHap({ timeout: 30e3 });
   const searchRes = await fh(url, {
-    proxy: proxy && ProxyHelper.url({ item: proxy }),
+    proxy: proxy && ProxyHelper.url({ proxyItem: proxy }),
   });
 
   let html = await searchRes.text();

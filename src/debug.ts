@@ -1,4 +1,5 @@
-import { Dodecorator, TResultError } from 'dprx-types';
+import { Dodecorator } from '@dofiltra/helpers';
+import { TResultError } from '@dofiltra/types';
 import { searchVideo } from './lib/search';
 
 (async () => {

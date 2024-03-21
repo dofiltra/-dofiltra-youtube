@@ -1,6 +1,6 @@
 {
   "name": "@dofiltra/youtube",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "Search videos on YouTube without API key",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -17,7 +17,7 @@
     "preversion": "yarn run lint",
     "version": "yarn run format && git add -A src",
     "postversion": "git push && git push --tags",
-    "upg:do": "yarn add dprx-types doback"
+    "upg:do": "yarn add --dev @dofiltra/types && yarn add dprx-types doback @dofiltra/helpers"
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/dofiltra/youtube#readme",
   "devDependencies": {
+    "@dofiltra/types": "^1.0.45",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.12",
     "jest": "^27.4.4",
@@ -49,6 +50,7 @@
     "typescript": "^4.5.3"
   },
   "dependencies": {
+    "@dofiltra/helpers": "^1.0.22",
     "doback": "^1.0.241",
     "dprx-types": "^1.2.863",
     "got": "^11.8.3"
