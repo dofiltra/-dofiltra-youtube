@@ -1,4 +1,4 @@
-import { ProxyItem } from 'dprx-types';
+import { ProxyItem } from '@dofiltra/helpers';
 import { searchVideo } from './lib/search';
 
 export function search({ searchQuery, proxy }: { searchQuery: string; proxy?: ProxyItem }) {
