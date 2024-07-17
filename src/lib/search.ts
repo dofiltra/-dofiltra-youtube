@@ -4,7 +4,17 @@ import { getFetchHap } from 'doback';
 
 const rfc3986EncodeURIComponent = (str: string) => encodeURIComponent(str).replace(/[!'()*]/g, escape);
 
-export async function searchVideo({ searchQuery, proxy }: { searchQuery: string; proxy?: ProxyItem }) {
+export async function searchVideo({
+  searchQuery,
+  proxy,
+  lang = 'en',
+  sp = `CAASBAgCEAE%253D`,
+}: {
+  searchQuery: string;
+  proxy?: ProxyItem;
+  lang?: string;
+  sp?: string;
+}) {
   const YOUTUBE_URL = 'https://www.youtube.com';
 
   const results = [];
@@ -12,7 +22,9 @@ export async function searchVideo({ searchQuery, proxy }: { searchQuery: string;
   let fetched = false;
 
   const options = { type: 'video', limit: 0 };
-  const url = `${YOUTUBE_URL}/results?q=${rfc3986EncodeURIComponent(searchQuery.trim())}&hl=en`;
+  const url = `${YOUTUBE_URL}/results?search_query=${rfc3986EncodeURIComponent(
+    searchQuery.trim(),
+  )}&hl=${lang}&sp=${sp}`;
 
   const fh = await getFetchHap({ timeout: 30e3 });
   const searchRes = await fh(url, {

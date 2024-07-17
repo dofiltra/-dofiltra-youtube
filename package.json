@@ -39,24 +39,22 @@
   },
   "homepage": "https://github.com/dofiltra/youtube#readme",
   "devDependencies": {
-    "@dofiltra/types": "^1.0.45",
-    "@types/jest": "^27.0.3",
+    "@dofiltra/types": "^1.0.251",
     "@types/node": "^16.11.12",
-    "jest": "^27.4.4",
     "prettier": "^2.5.1",
-    "ts-jest": "^27.1.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.5.3"
   },
   "dependencies": {
-    "@dofiltra/helpers": "^1.0.22",
-    "doback": "^1.0.241",
-    "dprx-types": "^1.2.863",
+    "@dofiltra/helpers": "^1.0.75",
+    "doback": "^1.0.372",
+    "dprx-types": "^1.2.990",
     "got": "^11.8.3"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
