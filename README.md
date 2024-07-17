@@ -1,8 +1,6 @@
-# [youtube-search: Node.js](https://github.com/appit-online/youtube-search)
+# [dofiltra/youtube-search: Node.js](https://github.com/dofiltra/youtube)
 
 Search videos on youtube without API key
-
-**Table of contents:**
 
 ### Using the library
 
