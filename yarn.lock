@@ -513,17 +513,17 @@ diff@^4.0.1:
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
-doback@^1.0.372:
-  version "1.0.372"
-  resolved "https://registry.npmjs.org/doback/-/doback-1.0.372.tgz#aedc2810523d07894a3f808867bc2aa355c6a60c"
-  integrity sha512-C9Wc94Q7BGhhg27SthdCc5v19zC7EoIx0I56oBwPmQ0hlZWguhD0YpAxTvRKcAvXcgwIk2xs87QHshtgLvZcww==
+doback@^1.0.373:
+  version "1.0.373"
+  resolved "https://registry.npmjs.org/doback/-/doback-1.0.373.tgz#3dcb651e8e6313fb633062c829bb52746508b38a"
+  integrity sha512-v/MNSMe3sNDDbfQ/r2LBlX7Qa26QONJLfVtnxC3AXsBjlLAPAp7Lig7Px4UbFEE7/Ne8mvW+Eea9IhdyOEHsAg==
   dependencies:
     "@cliqz/adblocker-playwright" "^1.27.0"
     "@dofiltra/helpers" "^1.0.75"
     cheerio "^1.0.0-rc.12"
     cnc-spintax "^1.0.1"
     dotenv "^16.3.1"
-    dprx-types "^1.2.989"
+    dprx-types "^1.2.991"
     lodash-es "^4.17.21"
     luxon "^3.4.3"
     make-fetch-happen "^13.0.0"
@@ -572,10 +572,10 @@ dotenv@^16.3.1:
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.4.1.tgz#1d9931f1d3e5d2959350d1250efab299561f7f11"
   integrity sha512-CjA3y+Dr3FyFDOAMnxZEGtnW9KBR2M0JvvUtXNW+dYJL5ROWxP9DUHCwgFqpMk0OXCc0ljhaNTr2w/kutYIcHQ==
 
-dprx-types@^1.2.989, dprx-types@^1.2.990:
-  version "1.2.990"
-  resolved "https://registry.npmjs.org/dprx-types/-/dprx-types-1.2.990.tgz#21cf002389a6ae7050697aba4e07f5a6e214b8d1"
-  integrity sha512-/AX3bnkw0xAGQBaoZh5Ou9FccKhc1QAtdes822OSpBcx6pOES6oI5AD6sLGxsAQWDgMff8K9A1JhR29JvvS0eQ==
+dprx-types@^1.2.991:
+  version "1.2.991"
+  resolved "https://registry.npmjs.org/dprx-types/-/dprx-types-1.2.991.tgz#17e75ac3f1fe7da9284b8f24655130136e8d3f0b"
+  integrity sha512-fPMBfhhHizSY8JG+a5S62z9V4LAU6cvvW4pbx0/wwnE843Fuw52ctfMaM59BP3t57Lr6EySGpVnwMLjY4T+Jqw==
   dependencies:
     "@dofiltra/helpers" "^1.0.75"
 
