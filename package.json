@@ -1,6 +1,6 @@
 {
   "name": "@dofiltra/youtube",
-  "version": "1.1.23",
+  "version": "1.1.24",
   "description": "Search videos on YouTube without API key",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
