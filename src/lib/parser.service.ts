@@ -125,7 +125,9 @@ export class ParserService {
           },
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
 
     return undefined
   }
