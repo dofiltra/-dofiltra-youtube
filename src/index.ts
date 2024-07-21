@@ -1,3 +1,3 @@
-import { searchVideo } from './lib/search';
+import { searchVideo } from './lib/search'
 
-export const searchVideos = searchVideo;
+export const searchVideos = searchVideo
