@@ -2,133 +2,80 @@ import type { TYtSearchVideoItem } from '@dofiltra/types'
 
 export class ParserService {
   parseVideo(data: any) {
-    if (!data) return undefined
+    const renderer = data?.compactVideoRenderer || data?.videoRenderer || data?.videoWithContextRenderer
 
-    let result: TYtSearchVideoItem = {} as TYtSearchVideoItem
+    if (!renderer) {
+      return undefined
+    }
 
     try {
-      let title = ''
-      const renderer = data.compactVideoRenderer || data.videoRenderer
+      const title = this.getTitle({ data })
+      const views =
+        renderer?.viewCountText?.simpleText?.replace?.(/[^0-9]/g, '') ||
+        renderer?.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(/[^0-9]/g, '') ||
+        0
+      const channel = {
+        isVerified: renderer?.ownerBadges?.[0]?.metadataBadgeRenderer?.tooltip === 'tooltip',
+      }
+      const thumbnails = renderer.thumbnail?.thumbnails
 
-      if (renderer) {
-        title = renderer.title.runs[0].text
-        title = title.replace('\\\\', '\\')
+      const result: TYtSearchVideoItem = {
+        id: {
+          videoId: renderer.videoId,
+        },
+        url: `https://www.youtube.com/watch?v=${renderer.videoId}`,
+        title,
+        description: renderer?.descriptionSnippet?.runs?.[0]?.text || '',
+        duration_raw: renderer?.lengthText?.simpleText || renderer?.lengthText?.accessibility?.accessibilityData?.text,
+        views,
+        channel,
 
-        try {
-          title = decodeURIComponent(title)
-        } catch (e) {
-          // @ts-ignore
-        }
-
-        result = {
-          ...result,
-          id: {
-            videoId: renderer.videoId,
-          },
+        snippet: {
           url: `https://www.youtube.com/watch?v=${renderer.videoId}`,
+          duration: renderer?.lengthText?.simpleText || renderer.lengthText?.accessibility?.accessibilityData?.text,
+          publishedAt: renderer?.publishedTimeText?.simpleText || renderer.publishedTimeText?.runs?.[0]?.text,
+          thumbnails: {
+            id: renderer.videoId,
+            url: thumbnails?.[thumbnails?.length - 1]?.url,
+            default: thumbnails?.[thumbnails?.length - 1],
+            high: thumbnails[thumbnails.length - 1],
+            height: thumbnails[thumbnails.length - 1].height,
+            width: thumbnails[thumbnails.length - 1].width,
+          },
           title,
-          description:
-            renderer.descriptionSnippet && renderer.descriptionSnippet.runs[0]
-              ? renderer.descriptionSnippet.runs[0].text
-              : '',
-          duration_raw: renderer.lengthText ? renderer.lengthText.simpleText : null,
-          snippet: {
-            url: `https://www.youtube.com/watch?v=${renderer.videoId}`,
-            duration: renderer.lengthText ? renderer.lengthText.simpleText : null,
-            publishedAt: renderer.publishedTimeText ? renderer.publishedTimeText.simpleText : null,
-            thumbnails: {
-              id: renderer.videoId,
-              url: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].url,
-              default: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1],
-              high: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1],
-              height: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].height,
-              width: renderer.thumbnail.thumbnails[renderer.thumbnail.thumbnails.length - 1].width,
-            },
-            title,
-            views:
-              renderer.viewCountText && renderer.viewCountText.simpleText
-                ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, '')
-                : 0,
-          },
-          views: renderer?.viewCountText?.simpleText?.replace?.(/[^0-9]/g, '') || 0,
-          channel: {
-            isVerified: renderer?.ownerBadges?.[0]?.metadataBadgeRenderer?.tooltip,
-          },
-        }
+          views,
+        },
+      } as TYtSearchVideoItem
 
-        return result
-      }
-
-      if (data.videoWithContextRenderer) {
-        if (data.videoWithContextRenderer.headline?.runs && data.videoWithContextRenderer.headline?.runs.length > 0) {
-          title = data.videoWithContextRenderer.headline?.runs[0].text
-        } else {
-          title = data.videoWithContextRenderer.headline?.accessibility?.accessibilityData?.label
-        }
-
-        title = title.replace('\\\\', '\\')
-
-        try {
-          title = decodeURIComponent(title)
-        } catch (e) {
-          // @ts-ignore
-        }
-
-        return {
-          id: {
-            videoId: data.videoWithContextRenderer.videoId,
-          },
-          url: `https://www.youtube.com/watch?v=${data.videoWithContextRenderer.videoId}`,
-          title,
-          description: '',
-          duration_raw: data.videoWithContextRenderer.lengthText?.accessibility?.accessibilityData?.text,
-          snippet: {
-            url: `https://www.youtube.com/watch?v=${data.videoWithContextRenderer.videoId}`,
-            duration: data.videoWithContextRenderer.lengthText?.accessibility?.accessibilityData?.text,
-            publishedAt:
-              data.videoWithContextRenderer.publishedTimeText?.runs?.length > 0
-                ? data.videoWithContextRenderer.publishedTimeText?.runs[0].text
-                : null,
-            thumbnails: {
-              id: data.videoWithContextRenderer.videoId,
-              url: data.videoWithContextRenderer.thumbnail.thumbnails[
-                data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
-              ].url,
-              default:
-                data.videoWithContextRenderer.thumbnail.thumbnails[
-                  data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
-                ],
-              high: data.videoWithContextRenderer.thumbnail.thumbnails[
-                data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
-              ],
-              height:
-                data.videoWithContextRenderer.thumbnail.thumbnails[
-                  data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
-                ].height,
-              width:
-                data.videoWithContextRenderer.thumbnail.thumbnails[
-                  data.videoWithContextRenderer.thumbnail.thumbnails.length - 1
-                ].width,
-            },
-            title,
-            views: data.videoWithContextRenderer.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(
-              /[^0-9]/g,
-              ''
-            ),
-          },
-          views: data.videoWithContextRenderer?.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(
-            /[^0-9]/g,
-            ''
-          ),
-          channel: {
-            isVerified: data.videoWithContextRenderer?.ownerBadges?.[0]?.metadataBadgeRenderer?.tooltip,
-          },
-        }
-      }
+      return result
     } catch (e) {
       //
     }
 
     return undefined
+  }
+
+  private getTitle({ data }: { data: any }) {
+    const renderer = data?.compactVideoRenderer || data?.videoRenderer
+    let title = renderer?.title?.runs?.[0]?.text
+
+    if (!title) {
+      const renderer = data?.videoWithContextRenderer
+
+      if (renderer?.headline?.runs && renderer?.headline?.runs?.length > 0) {
+        title = renderer?.headline?.runs?.[0]?.text
+      } else {
+        title = renderer.headline?.accessibility?.accessibilityData?.label
+      }
+    }
+
+    try {
+      title = (title || '').replace?.('\\\\', '\\') || ''
+      title = decodeURIComponent(title)
+    } catch (e) {
+      // @ts-ignore
+    }
+
+    return title || ''
   }
 }
