@@ -15,7 +15,7 @@ export class ParserService {
         renderer?.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(/[^0-9]/g, '') ||
         0
       const channel = {
-        isVerified: renderer?.ownerBadges?.[0]?.metadataBadgeRenderer?.tooltip === 'tooltip',
+        isVerified: renderer?.ownerBadges?.[0]?.metadataBadgeRenderer?.tooltip === 'Verified',
       }
       const thumbnails = renderer.thumbnail?.thumbnails
 
