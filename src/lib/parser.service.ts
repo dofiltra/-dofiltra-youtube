@@ -61,12 +61,7 @@ export class ParserService {
 
     if (!title) {
       renderer = data?.videoWithContextRenderer
-
-      if (renderer?.headline?.runs && renderer?.headline?.runs?.length > 0) {
-        title = renderer?.headline?.runs?.[0]?.text
-      } else {
-        title = renderer.headline?.accessibility?.accessibilityData?.label
-      }
+      title = renderer?.headline?.runs?.[0]?.text || renderer.headline?.accessibility?.accessibilityData?.label
     }
 
     try {
