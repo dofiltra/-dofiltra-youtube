@@ -63,10 +63,10 @@
   resolved "https://registry.npmjs.org/@dofiltra/helpers/-/helpers-1.0.75.tgz#0ce19ffae50417dbcdb9ab9591de089972886b3a"
   integrity sha512-xXb8kh/zfiakL5nKUEkPo8r36+2fVTCX5rWSzbIGKPiK9VQQsUEwnKuX7vzW0+EPUT1Ohunz/UK1JtW3s5uAqw==
 
-"@dofiltra/types@^1.0.251":
-  version "1.0.251"
-  resolved "https://registry.npmjs.org/@dofiltra/types/-/types-1.0.251.tgz#6085abca5b196ba46e26a301fd64f77a9ce2803b"
-  integrity sha512-OUD0VNMZAuusQ291B+J4MYbv4SzVjhlC+ek2E/FYkr35YgMSzAhCjA/OYEwsBULi+jvO3sK3eVUut542DivS5Q==
+"@dofiltra/types@^1.0.253":
+  version "1.0.253"
+  resolved "https://registry.npmjs.org/@dofiltra/types/-/types-1.0.253.tgz#738d12c3986bc9279922db486005a903780c3f45"
+  integrity sha512-5TDt8d4oMW/Cw1z6LOkfiMdvFN8VzXHk69aBpZ6QY6YJPh2OxcN/UnvGuRc7HECa9yxkSlU9Ow8+sxxNDji5Sg==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"

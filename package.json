@@ -6,7 +6,7 @@
   "types": "lib/index.d.ts",
   "type": "module",
   "scripts": {
-    "dev": "yarn run build && node --expose-gc --trace-warnings --experimental-modules --es-module-specifier-resolution=node ./build/debug.js",
+    "dev": "yarn run build && node --expose-gc --trace-warnings --experimental-modules --es-module-specifier-resolution=node ./lib/debug.js",
     "test": "echo \"jest --config jestconfig.json\"",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/dofiltra/youtube#readme",
   "devDependencies": {
-    "@dofiltra/types": "^1.0.251",
+    "@dofiltra/types": "^1.0.253",
     "@types/node": "^16.11.12",
     "prettier": "^2.5.1",
     "tslint": "^6.1.3",

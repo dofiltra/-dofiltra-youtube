@@ -1,22 +1,27 @@
+import type { TYtSearchVideoItem } from '@dofiltra/types'
+
 export class ParserService {
   parseVideo(data: any) {
-    if (!data) return undefined;
+    if (!data) return undefined
+
+    let result: TYtSearchVideoItem = {} as TYtSearchVideoItem
 
     try {
-      let title = '';
-      const renderer = data.compactVideoRenderer || data.videoRenderer;
+      let title = ''
+      const renderer = data.compactVideoRenderer || data.videoRenderer
 
       if (renderer) {
-        title = renderer.title.runs[0].text;
-        title = title.replace('\\\\', '\\');
+        title = renderer.title.runs[0].text
+        title = title.replace('\\\\', '\\')
 
         try {
-          title = decodeURIComponent(title);
+          title = decodeURIComponent(title)
         } catch (e) {
           // @ts-ignore
         }
 
-        return {
+        result = {
+          ...result,
           id: {
             videoId: renderer.videoId,
           },
@@ -45,22 +50,26 @@ export class ParserService {
                 ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, '')
                 : 0,
           },
-          views:
-            renderer.viewCountText && renderer.viewCountText.simpleText
-              ? renderer.viewCountText.simpleText.replace(/[^0-9]/g, '')
-              : 0,
-        };
-      } else if (data.videoWithContextRenderer) {
-        if (data.videoWithContextRenderer.headline?.runs && data.videoWithContextRenderer.headline?.runs.length > 0) {
-          title = data.videoWithContextRenderer.headline?.runs[0].text;
-        } else {
-          title = data.videoWithContextRenderer.headline?.accessibility?.accessibilityData?.label;
+          views: renderer?.viewCountText?.simpleText?.replace?.(/[^0-9]/g, '') || 0,
+          channel: {
+            isVerified: renderer?.ownerBadges?.[0]?.metadataBadgeRenderer?.tooltip,
+          },
         }
 
-        title = title.replace('\\\\', '\\');
+        return result
+      }
+
+      if (data.videoWithContextRenderer) {
+        if (data.videoWithContextRenderer.headline?.runs && data.videoWithContextRenderer.headline?.runs.length > 0) {
+          title = data.videoWithContextRenderer.headline?.runs[0].text
+        } else {
+          title = data.videoWithContextRenderer.headline?.accessibility?.accessibilityData?.label
+        }
+
+        title = title.replace('\\\\', '\\')
 
         try {
-          title = decodeURIComponent(title);
+          title = decodeURIComponent(title)
         } catch (e) {
           // @ts-ignore
         }
@@ -104,19 +113,20 @@ export class ParserService {
             title,
             views: data.videoWithContextRenderer.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(
               /[^0-9]/g,
-              '',
+              ''
             ),
           },
-          views: data.videoWithContextRenderer.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(
+          views: data.videoWithContextRenderer?.shortViewCountText?.accessibility?.accessibilityData?.label?.replace(
             /[^0-9]/g,
-            '',
+            ''
           ),
-        };
+          channel: {
+            isVerified: data.videoWithContextRenderer?.ownerBadges?.[0]?.metadataBadgeRenderer?.tooltip,
+          },
+        }
       }
+    } catch (e) {}
 
-      return undefined;
-    } catch (e) {
-      return undefined;
-    }
+    return undefined
   }
 }
