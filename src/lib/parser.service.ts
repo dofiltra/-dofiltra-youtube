@@ -56,11 +56,11 @@ export class ParserService {
   }
 
   private getTitle({ data }: { data: any }) {
-    const renderer = data?.compactVideoRenderer || data?.videoRenderer
+    let renderer = data?.compactVideoRenderer || data?.videoRenderer
     let title = renderer?.title?.runs?.[0]?.text
 
     if (!title) {
-      const renderer = data?.videoWithContextRenderer
+      renderer = data?.videoWithContextRenderer
 
       if (renderer?.headline?.runs && renderer?.headline?.runs?.length > 0) {
         title = renderer?.headline?.runs?.[0]?.text
