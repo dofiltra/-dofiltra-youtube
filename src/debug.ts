@@ -1,7 +1,9 @@
+/* tslint:disable:no-console */
+/* tslint:disable:no-debugger */
+
 import type { TResultError } from '@dofiltra/types'
 import { Dodecorator } from '@dofiltra/helpers'
 import { searchVideo } from './lib/search'
-
 ;(async () => {
   //
 })()
